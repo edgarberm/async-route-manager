@@ -15,7 +15,7 @@ the first preloader must be different from the sections preloader.
 Maybe an illustrated example can be more explicit...
 
 ![async-route-manager gif](http://www.builtbyedgar.com/lab/async-route-manager.gif)
-
+* API resources for the example by [Reqres](http://reqres.in). Thanks!
 
 
 ## Integration
