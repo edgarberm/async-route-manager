@@ -22,10 +22,7 @@ class AsyncRouteManager extends Component {
 
   constructor (...args) {
     super(...args)
-
-    // NOTE: para preparar una API consistente es posible que algunas de estas
-    // propiedades tengan que ser defaultProps.
-
+    
     this.initialFetch = true
     this.fetchingData = false
     this.prevChildren = null
