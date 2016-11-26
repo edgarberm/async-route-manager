@@ -6,22 +6,21 @@ in the easiest way.
 
 The problem with React Router is that it does not know if the child component has
 the data needed to be rendered. In most cases the data comes from an API and is
-not available when you execute the componentWillMount method of the component.
+not available when you execute the `componentWillMount` method of the component.
 
-In the ideal scenario, a preload should appear while the data is being obtained,
-and once the data is available, render the component. Wait, in the ideal scenario,
-the first preloader must be different from the sections preloader.
+In the ideal scenario, a preloader should appear while the data is being obtained,
+and once the data is available, the component can be rendered. Wait, in the ideal scenario,
+the first preloader must be different from the preloader for the sections.
 
 Maybe an illustrated example can be more explicit...
 
 ![async-route-manager gif](http://www.builtbyedgar.com/lab/async-route-manager.gif)
-* API resources for the example by [Reqres](http://reqres.in). Thanks!
+API resources for the example by [Reqres](http://reqres.in). Thanks!
 
 
 ## Integration
 
-I assume that you're using [react-router](https://www.npmjs.com/package/react-router).
-
+**NOTE**: More details soon.
 
 ### Configure the routes
 
