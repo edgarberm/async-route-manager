@@ -1,0 +1,26 @@
+{
+  "name": "async-route-manager",
+  "version": "0.0.1",
+  "description": "Handles asynchronous data loading for react-router Route components",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/builtbyedgar/async-route-manager.git"
+  },
+  "keywords": [
+    "react",
+    "react-router",
+    "fetch",
+    "async",
+    "preload"
+  ],
+  "author": "Edgar Bermejo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/builtbyedgar/async-route-manager/issues"
+  },
+  "homepage": "https://github.com/builtbyedgar/async-route-manager#readme"
+}
