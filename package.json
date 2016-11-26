@@ -1,6 +1,6 @@
 {
   "name": "async-route-manager",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.0",
   "description": "Handles asynchronous data loading for react-router Route components",
   "main": "src/index.js",
   "scripts": {

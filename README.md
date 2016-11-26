@@ -106,3 +106,28 @@ class App extends Component {
 export default App
 
 ```
+
+### Configure CSS transitions
+
+```css
+.transition-enter {
+  opacity: 0.01;
+  -webkit-transition: opacity 200ms ease;
+  transition: opacity 200ms ease;
+}
+
+.transition-enter.transition-enter-active {
+  opacity: 1;
+}
+
+
+.transition-out {
+  opacity: 1;
+  -webkit-transition: opacity 200ms ease;
+  transition: opacity 200ms ease;
+}
+
+.transition-out.transition-out-active {
+  opacity: 0.01;
+}
+```
