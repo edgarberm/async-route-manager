@@ -9,7 +9,13 @@ the data needed to be rendered. In most cases the data comes from an API and is
 not available when you execute the componentWillMount method of the component.
 
 In the ideal scenario, a preload should appear while the data is being obtained,
-and once the data is available, render the component.
+and once the data is available, render the component. Wait, in the ideal scenario,
+the first preloader must be different from the sections preloader.
+
+Maybe an illustrated example can be more explicit...
+
+![async-route-manager gif](http://www.builtbyedgar.com/lab/async-route-manager.gif)
+
 
 
 ## Integration
