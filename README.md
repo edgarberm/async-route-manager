@@ -1,15 +1,17 @@
-# AsyncRouteManager
+# Async Route Manager
+
+🚨 This repo is a proof of concept and is not ready for production.
 
 The idea behind this component (add-on) is to facilitate the the data preloading
 of the [react-router](https://www.npmjs.com/package/react-router) Route components
 in the easiest way.
 
 The problem with React Router is that it does not know if the child component has
-the data needed to be rendered. In most cases the data comes from an API and is
+the data needed to be rendered. In most cases the data comes from an API, and is
 not available when you execute the `componentWillMount` method of the component.
 
 In the ideal scenario, a preloader should appear while the data is being obtained,
-and once the data is available, the component can be rendered. Wait, in the ideal scenario,
+and once the data is available, the component can be rendered. Wait 🤔, in the ideal scenario,
 the first preloader must be different from the preloader for the sections.
 
 Maybe an illustrated example can be more explicit...
