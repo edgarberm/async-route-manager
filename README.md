@@ -10,7 +10,7 @@ The problem with React Router is that it does not know if the child component ha
 the data needed to be rendered. In most cases the data comes from an API, and is
 not available when you execute the `componentWillMount` method of the component.
 
-In the ideal scenario, a preloader be should appear while the data is being obtained,
+In the ideal scenario, a preloader should be appear while the data is being obtained,
 and once the data is available, the component can be rendered. Wait 🤔, in the ideal scenario,
 the first preloader must be different from the preloader for the sections.
 
