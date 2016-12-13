@@ -2,7 +2,7 @@
 
 🚨 This repo is a proof of concept and is not ready for production.
 
-The idea behind this component (add-on) is to facilitate the the data preloading
+The idea behind this component (add-on) is facilitate the data preloading
 of the [react-router](https://www.npmjs.com/package/react-router) Route components
 in the easiest way.
 
