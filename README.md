@@ -78,7 +78,8 @@ class App extends Component {
         <AsyncRouteManager initialPreloader={ MasterPreloader }
                            transitionPreloader={ TransitionPreloader }
                            transition={ true }
-                           transitionTiemOut={ 200 } >
+                           transitionTiemOut={ 600 }
+                           apiBaseURL="https://jsonplaceholder.typicode.com" >
           { this.props.children }
         </AsyncRouteManager>
       </div>
