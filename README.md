@@ -2,9 +2,9 @@
 
 🚨 This repo is a proof of concept and is not ready for production.
 
-The idea behind this component (add-on) is facilitate the data preloading
-of the [react-router](https://www.npmjs.com/package/react-router) Route components
-in the easiest way.
+The idea behind this component is to facilitate the data fetch and preloading for 
+the [react-router](https://www.npmjs.com/package/react-router) Route components in 
+the easiest way.
 
 The problem with React Router is that it does not know if the child component has
 the data needed to be rendered. In most cases the data comes from an API, and is
