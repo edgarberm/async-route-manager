@@ -41,7 +41,6 @@ class AsyncRouteManager extends Component {
 
 
   componentWillReceiveProps (nextProps) {
-    console.log('componentWillReceiveProps')
     // If the new view is the actual view, we don't render
     if (this.props.children.type.name === nextProps.children.type.name)
       return false
