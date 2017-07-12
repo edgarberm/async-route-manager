@@ -3,12 +3,13 @@
 import React, { Component } from 'react'
 import ReactDom from 'react-dom'
 import 'whatwg-fetch'
+import matchPath from './matchPath'
 
 
 /**
  * @class: AsyncRouteManager
- * @description: The idea behind this component (add-on) is to facilitate the
- * the data preloading of the react-router Route components in the easiest way.
+ * @description: The idea behind this component is to facilitate the
+ * data fetch and preloading for the react-router Route components in the easiest way.
  */
 class AsyncRouteManager extends Component {
 
@@ -22,7 +23,7 @@ class AsyncRouteManager extends Component {
 
   constructor (...args) {
     super(...args)
-    
+
     this.initialFetch = true
     this.fetchingData = false
     this.prevChildren = null
@@ -40,6 +41,7 @@ class AsyncRouteManager extends Component {
 
 
   componentWillReceiveProps (nextProps) {
+    console.log('componentWillReceiveProps')
     // If the new view is the actual view, we don't render
     if (this.props.children.type.name === nextProps.children.type.name)
       return false
@@ -47,19 +49,41 @@ class AsyncRouteManager extends Component {
     this.prevChildren = this.nextChildren
     this.nextChildren = nextProps.children
 
+    // If the previus view dont like data caching
+    if (this.prevChildren
+        && this.prevChildren.props.route.config
+        && this.prevChildren.props.route.config.datacaching === false) {
+      this.prevChildren.props.route.config.hasdata = false
+      this.prevChildren.props.route.config.data = {}
+    }
+
     this.checkChildrenConfigProps()
   }
 
 
+  shouldComponentUpdate (nextProps, nextState) {
+    if (this.props.children.type.name === nextProps.children.type.name) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+
   checkChildrenConfigProps () {
-    if (this.nextChildren.props.route.config) {
+    if (this.nextChildren.props.route.config && !this.nextChildren.props.route.config.hasdata) {
       this.fetchingData = true
-      const { dataURL, method, body } = this.nextChildren.props.route.config
-      let url = this.checkURLParams(dataURL)
+      const { URL, method, body } = this.nextChildren.props.route.config
+      let url = this.composeURLParameters(URL)
       this.fetchData(url, method, body)
     } else {
+      this.data = this.nextChildren.props.route.config
+                  ? this.nextChildren.props.route.config.data
+                  : {}
       if (this.props.transition === true) {
-        if (this.initialFetch) this.initialFetch = false
+        if (this.initialFetch)
+          this.initialFetch = false
+
         this.initializeTransition()
       } else {
         this.forceUpdate()
@@ -76,11 +100,14 @@ class AsyncRouteManager extends Component {
     .then(this.checkFetchStatus)
     .then(this.parseJSON)
     .then(data => {
-      // NOTE: We could define a variable that controls whether the component
-      // caches the data or not. this.nextChildren.props.route.loadeed = true
       this.data = data
       this.fetchingData = false
-      if (this.initialFetch) this.initialFetch = false
+
+      if (this.nextChildren.props.route.config.datacaching) this.nextChildren.props.route.config.data = data
+      this.nextChildren.props.route.config.hasdata = true
+
+      if (this.initialFetch)
+        this.initialFetch = false
 
       if (this.props.transition === true)
         this.initializeTransition()
@@ -110,17 +137,16 @@ class AsyncRouteManager extends Component {
   }
 
 
-  checkURLParams (url) {
-    // NOTE: Ugly
-    let _url = url.split('/:')
-    _url.splice(0, 1)
-    const params = _url
-    let parts = window.location.pathname.split( '/' );
-    parts.splice(0, 2)
-    for (let i = 0; i < params.length; i++)
-      url = url.replace(`:${params[i]}`, `${parts[i]}`)
+  composeURLParameters (path) {
+    let url = this.props.apiBaseURL
+    const match = matchPath(window.location.pathname, {
+      path: path,
+      exact: true,
+      strict: false
+    })
 
-    return url
+    // NOTE: we dont need cath the error because the react-router already takes care of it
+    if (match.isExact) return `${ url }${ match.url }`
   }
 
 
