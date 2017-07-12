@@ -28,15 +28,21 @@ Maybe an illustrated example can be more explicit...
 
 ```js
 const dashboardConfig = {
-  dataURL: 'http://reqres.in/api/users?delay=3',
+  URL: '/posts',
   method: 'GET',
-  body: null
+  body: null,
+  data: null,
+  hasdata: false,
+  datacaching: true
 }
 
 const detailConfig = {
-  dataURL: `http://reqres.in/api/users/:id`,
+  URL: `/posts/:id`,
   method: 'GET',
-  body: null
+  body: null,
+  data: null,
+  hasdata: false,
+  datacaching: false
 }
 ```
 
