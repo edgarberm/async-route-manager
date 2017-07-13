@@ -120,8 +120,8 @@ export default App
 ```css
 .transition-enter {
   opacity: 0.01;
-  -webkit-transition: opacity 200ms ease;
-  transition: opacity 200ms ease;
+  -webkit-transition: opacity 600ms ease;  // same time as transitionTiemOut component prop
+  transition: opacity 600ms ease;  // same time as transitionTiemOut component prop
 }
 
 .transition-enter.transition-enter-active {
@@ -131,8 +131,8 @@ export default App
 
 .transition-out {
   opacity: 1;
-  -webkit-transition: opacity 200ms ease;
-  transition: opacity 200ms ease;
+  -webkit-transition: opacity 600ms ease;  // same time as transitionTiemOut component prop
+  transition: opacity 600ms ease;  // same time as transitionTiemOut component prop
 }
 
 .transition-out.transition-out-active {
