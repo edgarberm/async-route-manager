@@ -1,5 +1,3 @@
-'use strict'
-
 import React, { Component } from 'react'
 import ReactDom from 'react-dom'
 import 'whatwg-fetch'
@@ -14,10 +12,12 @@ import matchPath from './matchPath'
 class AsyncRouteManager extends Component {
 
   static defaultProps = {
+    transition: true,
     transitionTiemOut: 600
   }
 
   static propTypes = {
+    transition: React.PropTypes.bool,
     transitionTiemOut: React.PropTypes.number
   }
 
@@ -48,14 +48,6 @@ class AsyncRouteManager extends Component {
     this.prevChildren = this.nextChildren
     this.nextChildren = nextProps.children
 
-    // If the previus view dont like data caching
-    if (this.prevChildren
-        && this.prevChildren.props.route.config
-        && this.prevChildren.props.route.config.datacaching === false) {
-      this.prevChildren.props.route.config.hasdata = false
-      this.prevChildren.props.route.config.data = {}
-    }
-
     this.checkChildrenConfigProps()
   }
 
@@ -76,9 +68,6 @@ class AsyncRouteManager extends Component {
       let url = this.composeURLParameters(URL)
       this.fetchData(url, method, body)
     } else {
-      this.data = this.nextChildren.props.route.config
-                  ? this.nextChildren.props.route.config.data
-                  : {}
       if (this.props.transition === true) {
         if (this.initialFetch)
           this.initialFetch = false
@@ -102,8 +91,8 @@ class AsyncRouteManager extends Component {
       this.data = data
       this.fetchingData = false
 
-      if (this.nextChildren.props.route.config.datacaching) this.nextChildren.props.route.config.data = data
       this.nextChildren.props.route.config.hasdata = true
+      this.nextChildren.props.route.config.data = data
 
       if (this.initialFetch)
         this.initialFetch = false
@@ -152,7 +141,7 @@ class AsyncRouteManager extends Component {
   initializeTransition () {
     this.transitioning = true
 
-    this.forceUpdate(_ => {
+    this.forceUpdate(() => {
       this.dom = ReactDom.findDOMNode(this.refs.child)
       if (this.prevChildren) {
         this.transitionOut()
@@ -164,12 +153,17 @@ class AsyncRouteManager extends Component {
 
 
   transitionEnter () {
+    if (this.prevChildren && this.prevChildren.props.route.config && !this.prevChildren.props.route.config.datacaching) {
+      this.prevChildren.props.route.config.hasdata = false
+      this.prevChildren.props.route.config.data = null
+    }
+
     this.dom.classList.add('transition-enter')
-    const st0 = window.setTimeout(_ => {
+    const st0 = window.setTimeout(() => {
       this.dom.classList.add('transition-enter-active')
       window.clearTimeout(st0)
     }, 20)
-    const st1 = window.setTimeout(_ => {
+    const st1 = window.setTimeout(() => {
       this.transitioning = false
       this.dom.classList.remove('transition-enter', 'transition-enter-active')
       this.forceUpdate()
@@ -180,14 +174,14 @@ class AsyncRouteManager extends Component {
 
   transitionOut () {
     this.dom.classList.add('transition-out')
-    const st0 = window.setTimeout(_ => {
+    const st0 = window.setTimeout(() => {
       this.dom.classList.add('transition-out-active')
       window.clearTimeout(st0)
     }, 20)
-    const st1 = window.setTimeout(_ => {
+    const st1 = window.setTimeout(() => {
       this.transitioning = false
       this.dom.classList.remove('transition-out', 'transition-out-active')
-      this.forceUpdate(_ => {
+      this.forceUpdate(() => {
         this.dom = ReactDom.findDOMNode(this.refs.child)
         this.transitionEnter()
         window.clearTimeout(st1)
@@ -209,11 +203,12 @@ class AsyncRouteManager extends Component {
                         : this.nextChildren.props
     const nextProps = this.nextChildren.props
     const childProps = (this.fetchingData || this.transitioning) ? prevProps : nextProps
+    const data = childProps.route.config ? childProps.route.config.data : null
 
     return (
       <div className="container-manager">
         { (this.initialFetch) ? null : (this.fetchingData) ? this.props.transitionPreloader() : null }
-        { (!this.initialFetch) ? <ChildrenComponent { ...childProps } data={ this.data } ref="child" /> : this.props.initialPreloader() }
+        { (!this.initialFetch) ? <ChildrenComponent { ...childProps } data={ data } ref="child" /> : this.props.initialPreloader() }
       </div>
     )
   }
